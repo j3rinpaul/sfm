@@ -29,7 +29,7 @@ def load_point_cloud(filename):
 
 with st.spinner("Loading 3D Point Cloud..."):
     # We now just pass the relative folder and filename
-    df = load_point_cloud("static/model.ply")
+    df = load_point_cloud("web_app\static\model.ply")
 
 # ... (The rest of your PyDeck code remains exactly the same!)
 # 3. Create the PyDeck Point Cloud Layer
