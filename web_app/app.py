@@ -3,14 +3,29 @@ import pydeck as pdk
 import pandas as pd
 import numpy as np
 from plyfile import PlyData
-import os # Add this import!
+import os 
 
-# ... [Webpage layout code remains the same] ...
+# 1. Setup the Webpage Layout
+st.set_page_config(page_title="3D Point Cloud Viewer", layout="wide")
+st.title("COLMAP Sparse Reconstruction Viewer")
+st.markdown("Use your mouse to drag, rotate, and scroll to zoom in on the point cloud.")
+
+# --- Debugging Block ---
+st.write("### Debugging: What files does Streamlit see?")
+st.write("Current working directory:", os.getcwd())
+st.write("Files in current directory:", os.listdir())
+if os.path.exists("static"):
+    st.write("Files in /static folder:", os.listdir("static"))
+else:
+    st.write("ERROR: The 'static' folder does not exist!")
+# -----------------------
 
 @st.cache_data
 def load_point_cloud(filename):
-    # Dynamically find the absolute path to the file
+    # Dynamically find the absolute path to the folder where app.py lives
     base_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Safely join paths regardless of Windows/Linux
     full_path = os.path.join(base_dir, filename)
     
     # Read the PLY file using the bulletproof path
@@ -28,10 +43,9 @@ def load_point_cloud(filename):
     return df
 
 with st.spinner("Loading 3D Point Cloud..."):
-    # We now just pass the relative folder and filename
-    df = load_point_cloud("web_app\static\model.ply")
+    # FIX: Use forward slashes and drop the "web_app" prefix!
+    df = load_point_cloud("static/model.ply")
 
-# ... (The rest of your PyDeck code remains exactly the same!)
 # 3. Create the PyDeck Point Cloud Layer
 point_cloud_layer = pdk.Layer(
     "PointCloudLayer",
