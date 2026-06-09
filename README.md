@@ -1,3 +1,18 @@
+
+
+
+# 3D Reconstruction Pipeline via Structure from Motion (SfM)
+
+A custom, end-to-end 3D reconstruction pipeline developed in Python. This project implements a sparse Structure from Motion (SfM) workflow to estimate camera trajectories and reconstruct detailed 3D point clouds from a sequence of unordered 2D images, connecting geometric computer vision principles with practical numerical optimization.
+
+## 🚀 Core Technical Focus
+* **Feature Detection & Matching:** Robust point correspondence estimation and geometric verification across multi-view image sequences.
+* **Epipolar Geometry:** Computing essential matrices and decomposing them into valid rotation ($R$) and translation ($t$) camera poses.
+* **Triangulation & Reconstruction:** Iteratively generating discrete 3D spatial points from calibrated 2D coordinates.
+* **Optimization Strategy:** Formulating bundle adjustment pipelines to minimize overall reprojection errors.
+
+---
+
 ## 📊 System Architecture & Visual Results
 
 <table style="width: 100%; border-collapse: collapse; border: none;">
@@ -20,17 +35,6 @@
   </tr>
 </table>
 
-
-# 3D Reconstruction Pipeline via Structure from Motion (SfM)
-
-A custom, end-to-end 3D reconstruction pipeline developed in Python. This project implements a sparse Structure from Motion (SfM) workflow to estimate camera trajectories and reconstruct detailed 3D point clouds from a sequence of unordered 2D images, connecting geometric computer vision principles with practical numerical optimization.
-
-## 🚀 Core Technical Focus
-* **Feature Detection & Matching:** Robust point correspondence estimation and geometric verification across multi-view image sequences.
-* **Epipolar Geometry:** Computing essential matrices and decomposing them into valid rotation ($R$) and translation ($t$) camera poses.
-* **Triangulation & Reconstruction:** Iteratively generating discrete 3D spatial points from calibrated 2D coordinates.
-* **Optimization Strategy:** Formulating bundle adjustment pipelines to minimize overall reprojection errors.
-
 ---
 
 ## 🛠️ Tech Stack & Frameworks
@@ -41,8 +45,6 @@ A custom, end-to-end 3D reconstruction pipeline developed in Python. This projec
 ---
 
 ## 📦 Pipeline Architecture & Workflow
-
-
 
 ### 1. Feature Extraction and Correspondence Mapping
 The pipeline utilizes robust feature descriptors (such as SIFT/ORB) to extract keypoints across sequential image frames. Feature matching is completed using FLANN or Brute-Force matchers, followed by an aggressive **RANSAC-based homography or essential matrix filter** to purge outlier correspondences and maintain high-precision tracking points.
