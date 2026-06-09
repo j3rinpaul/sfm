@@ -3,20 +3,20 @@ import pydeck as pdk
 import pandas as pd
 import numpy as np
 from plyfile import PlyData
+import os # Add this import!
 
-# 1. Setup the Webpage Layout
-st.set_page_config(page_title="3D Point Cloud Viewer", layout="wide")
-st.title("COLMAP Sparse Reconstruction Viewer")
-st.markdown("Use your mouse to drag, rotate, and scroll to zoom in on the point cloud.")
+# ... [Webpage layout code remains the same] ...
 
-# 2. Load the Data using plyfile (Cloud-friendly!)
 @st.cache_data
-def load_point_cloud(filepath):
-    # Read the PLY file
-    plydata = PlyData.read(filepath)
+def load_point_cloud(filename):
+    # Dynamically find the absolute path to the file
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    full_path = os.path.join(base_dir, filename)
+    
+    # Read the PLY file using the bulletproof path
+    plydata = PlyData.read(full_path)
     vertex_data = plydata['vertex'].data
     
-    # Extract coordinates and colors into a Pandas DataFrame
     df = pd.DataFrame({
         "x": vertex_data['x'],
         "y": vertex_data['y'],
@@ -28,6 +28,7 @@ def load_point_cloud(filepath):
     return df
 
 with st.spinner("Loading 3D Point Cloud..."):
+    # We now just pass the relative folder and filename
     df = load_point_cloud("static/model.ply")
 
 # ... (The rest of your PyDeck code remains exactly the same!)
