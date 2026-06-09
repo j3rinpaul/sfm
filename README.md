@@ -75,9 +75,8 @@ Before setting up the pipeline, ensure your system meets the following environme
 
 ### 🚀 Setup Instructions
 
-1. **Clone the Repository:**
    ```bash
-   git clone [https://github.com/j3rinpaul/sfm.git](https://github.com/j3rinpaul/sfm.git)
+   git clone https://github.com/j3rinpaul/sfm.git
    cd sfm
    python -m venv venv
    source venv/bin/activate  # On Windows use: venv\Scripts\activate
