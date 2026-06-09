@@ -44,7 +44,7 @@ def load_point_cloud(filename):
 
 with st.spinner("Loading 3D Point Cloud..."):
     # FIX: Use forward slashes and drop the "web_app" prefix!
-    df = load_point_cloud("web_app/static/model.ply")
+    df = load_point_cloud("model.ply")
 
 # 3. Create the PyDeck Point Cloud Layer
 point_cloud_layer = pdk.Layer(
