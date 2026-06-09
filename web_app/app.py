@@ -1,38 +1,36 @@
 import streamlit as st
 import pydeck as pdk
-import open3d as o3d
 import pandas as pd
 import numpy as np
+from plyfile import PlyData
 
 # 1. Setup the Webpage Layout
 st.set_page_config(page_title="3D Point Cloud Viewer", layout="wide")
 st.title("COLMAP Sparse Reconstruction Viewer")
 st.markdown("Use your mouse to drag, rotate, and scroll to zoom in on the point cloud.")
 
-# 2. Load the Data (Cached for speed)
+# 2. Load the Data using plyfile (Cloud-friendly!)
 @st.cache_data
 def load_point_cloud(filepath):
-    # Read the PLY file using Open3D
-    pcd = o3d.io.read_point_cloud(filepath)
-    points = np.asarray(pcd.points)
+    # Read the PLY file
+    plydata = PlyData.read(filepath)
+    vertex_data = plydata['vertex'].data
     
-    # PyDeck expects colors in a 0-255 range
-    colors = np.asarray(pcd.colors) * 255  
-
-    # PyDeck requires data to be in a Pandas DataFrame
+    # Extract coordinates and colors into a Pandas DataFrame
     df = pd.DataFrame({
-        "x": points[:, 0],
-        "y": points[:, 1],
-        "z": points[:, 2],
-        "r": colors[:, 0].astype(int),
-        "g": colors[:, 1].astype(int),
-        "b": colors[:, 2].astype(int),
+        "x": vertex_data['x'],
+        "y": vertex_data['y'],
+        "z": vertex_data['z'],
+        "r": vertex_data['red'],
+        "g": vertex_data['green'],
+        "b": vertex_data['blue']
     })
     return df
 
 with st.spinner("Loading 3D Point Cloud..."):
     df = load_point_cloud("static/model.ply")
 
+# ... (The rest of your PyDeck code remains exactly the same!)
 # 3. Create the PyDeck Point Cloud Layer
 point_cloud_layer = pdk.Layer(
     "PointCloudLayer",
